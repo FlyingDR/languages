@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rinvex\Language\Providers;
 
 use Illuminate\Support\ServiceProvider;

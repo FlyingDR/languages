@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rinvex\Language\Tests\Unit;
 
 use ReflectionClass;
@@ -15,7 +13,17 @@ class LanguageLoaderTest extends TestCase
     /** @var array */
     protected static $methods;
 
-    public static function setUpBeforeClass(): void
+    public function assertIsArray($actual, $message = '')
+    {
+        $this->assertInternalType('array', $actual, $message);
+    }
+
+    public function assertIsObject($actual, $message = '')
+    {
+        $this->assertInternalType('object', $actual, $message);
+    }
+
+    public static function setUpBeforeClass()
     {
         $reflectedLoader = new ReflectionClass(LanguageLoader::class);
         self::$methods['get'] = $reflectedLoader->getMethod('get');
@@ -29,7 +37,7 @@ class LanguageLoaderTest extends TestCase
         }
     }
 
-    public static function tearDownAfterClass(): void
+    public static function tearDownAfterClass()
     {
         self::$methods = null;
     }
@@ -308,7 +316,7 @@ class LanguageLoaderTest extends TestCase
     /** @test */
     public function it_gets_file_content()
     {
-        $this->assertStringEqualsFile(__DIR__.'/../resources/languages.json', self::$methods['getFile']->invoke(null, __DIR__.'/../resources/languages.json'));
+        $this->assertStringEqualsFile(__DIR__.'/../../resources/languages.json', self::$methods['getFile']->invoke(null, __DIR__.'/../../resources/languages.json'));
     }
 
     /** @test */

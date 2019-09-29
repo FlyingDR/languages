@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rinvex\Language;
 
 use Closure;
@@ -19,11 +17,12 @@ class LanguageLoader
      * Get the language by it's ISO ISO 639-1 code.
      *
      * @param string $code
-     * @param bool   $hydrate
-     *
-     * @throws \Rinvex\Language\LanguageLoaderException
+     * @param bool $hydrate
      *
      * @return \Rinvex\Language\Language|array
+     * @throws \Exception
+     *
+     * @throws \Rinvex\Language\LanguageLoaderException
      */
     public static function language($code, $hydrate = true)
     {
@@ -46,6 +45,7 @@ class LanguageLoader
      * @param bool $hydrate
      *
      * @return array
+     * @throws LanguageLoaderException
      */
     public static function languages($hydrate = false)
     {
@@ -62,6 +62,7 @@ class LanguageLoader
      * Get all language scripts.
      *
      * @return array
+     * @throws LanguageLoaderException
      */
     public static function scripts()
     {
@@ -76,6 +77,7 @@ class LanguageLoader
      * Get all language families.
      *
      * @return array
+     * @throws LanguageLoaderException
      */
     public static function families()
     {
@@ -90,10 +92,11 @@ class LanguageLoader
      * Filter items by the given key value pair.
      *
      * @param string $key
-     * @param mixed  $operator
-     * @param mixed  $value
+     * @param mixed $operator
+     * @param mixed $value
      *
      * @return array
+     * @throws LanguageLoaderException
      */
     public static function where($key, $operator, $value = null)
     {
@@ -167,7 +170,7 @@ class LanguageLoader
      */
     protected static function get($target, $key, $default = null)
     {
-        if (is_null($key)) {
+        if ($key === null) {
             return $target;
         }
 
@@ -211,7 +214,7 @@ class LanguageLoader
 
         $value = is_string($value) ? explode('.', $value) : $value;
 
-        $key = is_null($key) || is_array($key) ? $key : explode('.', $key);
+        $key = $key === null || is_array($key) ? $key : explode('.', $key);
 
         foreach ($array as $item) {
             $itemValue = static::get($item, $value);
@@ -219,7 +222,7 @@ class LanguageLoader
             // If the key is "null", we will just append the value to the array and keep
             // looping. Otherwise we will key the array using the value of the key we
             // received from the developer. Then we'll return the final array form.
-            if (is_null($key)) {
+            if ($key === null) {
                 $results[] = $itemValue;
             } else {
                 $itemKey = static::get($item, $key);
@@ -247,6 +250,7 @@ class LanguageLoader
                 continue;
             }
 
+            /** @noinspection SlowArrayOperationsInLoopInspection */
             $results = array_merge($results, $values);
         }
 

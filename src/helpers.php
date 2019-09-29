@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Rinvex\Language\LanguageLoader;
 
 if (! function_exists('language')) {
@@ -9,9 +7,10 @@ if (! function_exists('language')) {
      * Get the language by it's ISO 639-1.
      *
      * @param string $code
-     * @param bool   $hydrate
+     * @param bool $hydrate
      *
      * @return \Rinvex\Language\Language|array
+     * @throws \Rinvex\Language\LanguageLoaderException
      */
     function language($code, $hydrate = true)
     {
@@ -26,6 +25,7 @@ if (! function_exists('languages')) {
      * @param bool $hydrate
      *
      * @return array
+     * @throws \Rinvex\Language\LanguageLoaderException
      */
     function languages($hydrate = false)
     {
@@ -38,6 +38,7 @@ if (! function_exists('language_scripts')) {
      * Get all language scripts.
      *
      * @return array
+     * @throws \Rinvex\Language\LanguageLoaderException
      */
     function language_scripts()
     {
@@ -50,6 +51,7 @@ if (! function_exists('language_families')) {
      * Get all language families.
      *
      * @return array
+     * @throws \Rinvex\Language\LanguageLoaderException
      */
     function language_families()
     {

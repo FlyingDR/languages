@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rinvex\Language;
 
 use Exception;
@@ -52,7 +50,7 @@ class Language
      *
      * @return array|null
      */
-    public function getAttributes(): ?array
+    public function getAttributes()
     {
         return $this->attributes;
     }
@@ -84,7 +82,7 @@ class Language
     {
         $array = $this->attributes;
 
-        if (is_null($key)) {
+        if ($key === null) {
             return $array;
         }
 
@@ -108,7 +106,7 @@ class Language
      *
      * @return string|null
      */
-    public function getName(): ?string
+    public function getName()
     {
         return $this->get('name');
     }
@@ -118,7 +116,7 @@ class Language
      *
      * @return string|null
      */
-    public function getNativeName(): ?string
+    public function getNativeName()
     {
         return $this->get('native');
     }
@@ -158,7 +156,7 @@ class Language
      *
      * @return array|null
      */
-    public function getScript(): ?array
+    public function getScript()
     {
         return $this->get('script');
     }
@@ -168,7 +166,7 @@ class Language
      *
      * @return string|null
      */
-    public function getScriptName(): ?string
+    public function getScriptName()
     {
         return $this->get('script.name');
     }
@@ -188,7 +186,7 @@ class Language
      *
      * @return string|null
      */
-    public function getScriptIsoNumeric(): ?string
+    public function getScriptIsoNumeric()
     {
         return $this->get('script.iso_numeric');
     }
@@ -198,7 +196,7 @@ class Language
      *
      * @return string|null
      */
-    public function getScriptDirection(): ?string
+    public function getScriptDirection()
     {
         return $this->get('script.direction');
     }
@@ -208,7 +206,7 @@ class Language
      *
      * @return array|null
      */
-    public function getFamily(): ?array
+    public function getFamily()
     {
         return $this->get('family');
     }
@@ -218,7 +216,7 @@ class Language
      *
      * @return string|null
      */
-    public function getFamilyName(): ?string
+    public function getFamilyName()
     {
         return $this->get('family.name');
     }
@@ -238,7 +236,7 @@ class Language
      *
      * @return string|null
      */
-    public function getFamilyHierarchy(): ?string
+    public function getFamilyHierarchy()
     {
         return $this->get('family.hierarchy');
     }
@@ -248,7 +246,7 @@ class Language
      *
      * @return string|null
      */
-    public function getScope(): ?string
+    public function getScope()
     {
         return $this->get('scope');
     }
@@ -258,7 +256,7 @@ class Language
      *
      * @return string|null
      */
-    public function getType(): ?string
+    public function getType()
     {
         return $this->get('type');
     }
@@ -268,7 +266,7 @@ class Language
      *
      * @return array|null
      */
-    public function getCultures(): ?array
+    public function getCultures()
     {
         return $this->get('cultures');
     }
@@ -280,8 +278,12 @@ class Language
      *
      * @return array|null
      */
-    public function getCulture($culture = null): ?array
+    public function getCulture($culture = null)
     {
-        return $this->getCultures()[$culture] ?? (! empty($this->getCultures()) ? current($this->getCultures()) : null);
+        $cultures = $this->getCultures();
+        if (is_array($cultures) && array_key_exists($culture, $cultures)) {
+            return $cultures[$culture];
+        }
+        return (!empty($cultures) ? current($cultures) : null);
     }
 }

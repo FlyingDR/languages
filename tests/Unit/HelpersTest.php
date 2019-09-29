@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Rinvex\Language\Tests\Unit;
 
 use Rinvex\Language\Language;
@@ -41,6 +39,10 @@ class HelpersTest extends TestCase
 
         $this->assertEquals($amharic, language('am', false));
         $this->assertEquals(new Language($amharic), language('am'));
+    }
+
+    public function assertIsArray($actual, $message = '') {
+        $this->assertInternalType('array', $actual, $message);
     }
 
     /** @test */
